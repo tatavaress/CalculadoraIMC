@@ -1,0 +1,63 @@
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+
+class CalculadoraIMC(App):
+    def build(self):
+        layout = BoxLayout(orientation='vertical')
+        
+        layout.add_widget(Label(text="Bem vindo à Calculadora de IMC"))
+        
+        pergunta_nome = TextInput(hint_text="Qual é o seu nome?")
+        layout.add_widget(pergunta_nome)
+        
+        idade = TextInput(hint_text="Qual sua idade?")
+        layout.add_widget(idade)
+        
+        peso = TextInput(hint_text="Qual seu peso (em KG)?")
+        layout.add_widget(peso)
+        
+        altura = TextInput(hint_text="Qual sua Altura (em metros e usando ponto)?")
+        layout.add_widget(altura)
+        
+        button = Button(text="Calcular IMC")
+        button.bind(on_press=self.calcular_imc)
+        layout.add_widget(button)
+        
+        self.resultado_label = Label()
+        layout.add_widget(self.resultado_label)
+        
+        return layout
+
+    def calcular_imc(self, instance):
+        nome = self.root.children[1].text
+        idade = self.root.children[2].text
+        peso = float(self.root.children[3].text)
+        altura = float(self.root.children[4].text)
+        
+        imc = peso / (altura * altura)
+        
+        resultado = f"{nome}, seu IMC é: {imc:.2f}\n"
+        
+        if imc < 16:
+            resultado += "Seu estado é de Magreza grave\nProcure um médico ou nutricionista."
+        elif imc < 17:
+            resultado += "Seu estado é de Magreza moderada\nPrecisa rever sua alimentação."
+        elif imc < 18.5:
+            resultado += "Seu estado é de Magreza leve\nPrecisa rever sua alimentação."
+        elif imc < 25:
+            resultado += "Você está Saudável.\nParabéns!"
+        elif imc < 30:
+            resultado += "Seu estado é de Sobrepeso\nPrecisa rever sua alimentação."
+        elif imc < 35:
+            resultado += "Seu estado é de Obesidade Grau I\nProcure um médico ou nutricionista."
+        elif imc < 40:
+            resultado += "Seu estado é de Obesidade Grau II (severa)\nProcure um médico ou nutricionista."
+        else:
+            resultado += "Seu estado é de Obesidade Grau III (mórbida)\nProcure um médico ou nutricionista."
+        
+        self.resultado_label.text = resultado
+
+CalculadoraIMC().run()
