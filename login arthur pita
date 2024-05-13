@@ -11,9 +11,9 @@ from kivy.uix.modalview import ModalView
 
 
 class Login(BoxLayout):
-    def __init__(self, arg1=None, arg2=None, **kwargs):
+    def _init_(self, arg1=None, arg2=None, **kwargs):
         Window.clearcolor = (1, 1, 1, 1)
-        super().__init__(**kwargs)
+        super()._init_(**kwargs)
         self.arg1 = arg1
         self.arg2 = arg2
         self.orientation = "vertical"
@@ -52,9 +52,9 @@ class Login(BoxLayout):
         self._window.open()
 
 class NewWindow(BoxLayout):
-    def __init__(self, arg1, arg2, **kwargs):
+    def _init_(self, arg1, arg2, **kwargs):
         Window.clearcolor = (1, 1, 1, 1)
-        super().__init__(**kwargs)
+        super()._init_(**kwargs)
         self.arg1 = 'value1'
         self.arg2 = 'value2'
         self.orientation = 'vertical'
@@ -96,5 +96,5 @@ class MyApp(App):
     def build(self):
         return Login()
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     MyApp().run()
