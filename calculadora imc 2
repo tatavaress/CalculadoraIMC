@@ -1,0 +1,37 @@
+from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+
+class LoginScreen(Screen):
+    def _init_(self, **kwargs):
+        super(LoginScreen, self)._init_(**kwargs)
+        self.add_widget(Label(text='Login Screen'))
+        # Adicione aqui os campos de login e botões de login/cadastro
+
+class CalculateIMCScreen(Screen):
+    def _init_(self, **kwargs):
+        super(CalculateIMCScreen, self)._init_(**kwargs)
+        self.add_widget(Label(text='Calculate BMI Screen'))
+        # Adicione aqui os campos de entrada de dados para cálculo do IMC e o botão de calcular
+
+class SettingsScreen(Screen):
+    def _init_(self, **kwargs):
+        super(SettingsScreen, self)._init_(**kwargs)
+        self.add_widget(Label(text='Settings Screen'))
+        # Adicione aqui as configurações que deseja incluir
+
+class MyScreenManager(ScreenManager):
+    def _init_(self, **kwargs):
+        super(MyScreenManager, self)._init_(**kwargs)
+        self.add_widget(LoginScreen(name='login'))
+        self.add_widget(CalculateIMCScreen(name='calculate_imc'))
+        self.add_widget(SettingsScreen(name='settings'))
+
+class MyApp(App):
+    def build(self):
+        return MyScreenManager()
+
+if _name_ == '_main_':
+    MyApp().run()
