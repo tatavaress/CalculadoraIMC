@@ -395,18 +395,21 @@ ScreenManager:
         MDLabel: 
             id: dicas
             text: ""
-            pos_hint: {"center_x":.5, "center_y":.10}
+            pos_hint: {"center_x":.5, "center_y":.13}
             font_name: "Poppins-Regular.ttf"
             font_size: "12sp"
             halign: "center"       
 
         MDTextButton: 
             id: noticia
-            text: "Saiba mais"
+            text: "[u]Saiba mais[/u]"
             pos_hint: {"center_x":.5, "center_y":.05}
             font_name: "Poppins-Regular.ttf"
+            theme_text_color: "Custom"
+            text_color: (0, 0, 1, 1)
             font_size: "12sp"
-            halign: "center"  
+            markup: True
+            halign: "right"  
             on_release: root.on_saiba_mais_press()    
 
 '''
@@ -439,8 +442,8 @@ class CalculadoraScreen(Screen):
         categoria = self.ids.imc_condition.text.split(":")[1].strip()  # Obtém a categoria do IMC
         link = self.get_saiba_mais_link(categoria)  # Obtém o link com base na categoria
         if link:
-            webbrowser.open(link)  # Abre o link no navegador
-
+            webbrowser.open(link) 
+            
     def get_saiba_mais_link(self, categoria):
         if categoria == "Abaixo do peso":
             return "https://www.uol.com.br/vivabem/noticias/redacao/2019/11/28/dificuldade-em-engordar-8-dicas-para-ganhar-peso-sem-comprometer-a-saude.htm"
@@ -454,7 +457,6 @@ class CalculadoraScreen(Screen):
             return "https://blog.winsocial.com.br/obesidade/"
         elif categoria == "Obesidade grau III":
             return "https://blog.winsocial.com.br/obesidade/"
-
 
 
     def get_imc_category(self, imc):
