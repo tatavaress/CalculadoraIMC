@@ -135,7 +135,7 @@ ScreenManager:
                     radius: [23]
             on_release:
                 print("Login realizado", email_login.text, senha_login.text)
-                app.my_firebaselogin.Login(email_login.text, senha_login.text)
+                app.my_firebaselogin.Login(email_login.text, senha_login.text, login_message)
                 root.manager.transition.direction = "right"
                 root.manager.current = "calculadora"
 
@@ -533,6 +533,9 @@ class MyFirebaseLogin:
             print("Login bem-sucedido")
         except:
             print("Login falhou")
+            login_message.text = "Dados inválidos"
+            login_message.text_color = (1, 0, 0, 1)  # Vermelho
+            login_message.font_size = "20sp"
 
     def sign_up(self, email, username, password):
         try:
