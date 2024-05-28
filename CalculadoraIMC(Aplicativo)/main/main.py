@@ -454,10 +454,18 @@ class CalculadoraScreen(Screen):
                 self.ids.imc_condition.text = ""
 
     def on_saiba_mais_press(self):
-        categoria = self.ids.imc_condition.text.split(":")[1].strip()  # Obtém a categoria do IMC
-        link = self.get_saiba_mais_link(categoria)  # Obtém o link com base na categoria
+        categoria_text = self.ids.imc_condition.text
+        if ":" in categoria_text:
+          categoria = categoria_text.split(":")[1].strip()
+        else:
+           categoria = None
+        if categoria:
+            link = self.get_saiba_mais_link(categoria)
+        else:
+            link = "https://www.tuasaude.com/imc/"
+
         if link:
-            webbrowser.open(link) 
+            webbrowser.open(link)  
             
     def get_saiba_mais_link(self, categoria):
         if categoria == "Abaixo do peso":
