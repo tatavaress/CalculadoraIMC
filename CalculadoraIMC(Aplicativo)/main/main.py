@@ -8,7 +8,6 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen, ScreenManager
 import webbrowser
 
-# Configuração do Firebase
 firebaseConfig = {
     'apiKey': "AIzaSyAZRpAINGFAgy8nFxW-IzBslyQN3PBIrV0",
     'authDomain': "calcimc-3ef39.firebaseapp.com",
@@ -138,6 +137,7 @@ ScreenManager:
                 app.my_firebaselogin.Login(email_login.text, senha_login.text, login_message)
                 root.manager.transition.direction = "right"
                 root.manager.current = "calculadora"
+
 
 <CadastroScreen>:
     name: "cadastro"
@@ -410,15 +410,29 @@ ScreenManager:
             font_size: "12sp"
             markup: True
             halign: "right"  
-            on_release: root.on_saiba_mais_press()    
+            on_release: root.on_saiba_mais_press()
+
+        MDTextButton:
+            text: "Voltar"
+            font_name: "Poppins-Regular.ttf"
+            theme_text_color: "Custom"
+            font_size: "15sp"
+            text_color: 162/255, 201/255, 86/255, 1
+            valign: "top"
+            halign: "left"
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "login"  
 
 '''
 
 class LoginScreen(Screen):
     pass
 
+
 class CadastroScreen(Screen):
     pass
+
 
 
 class CalculadoraScreen(Screen):
@@ -432,7 +446,9 @@ class CalculadoraScreen(Screen):
         peso_text = peso_kg.text.strip()
 
         if not altura_text or not peso_text:
+            self.ids.resultado.pos_hint: {"center_x":.5, "center_y":.35}
             self.ids.resultado.text = "Insira valores válidos para altura e peso."
+            self.ids.resultado.font_size = "16sp"
             self.ids.imc_condition.text = ""
         else:
             try:
@@ -440,6 +456,7 @@ class CalculadoraScreen(Screen):
                 peso = float(peso_text)
                 if altura == 0 or peso == 0:
                     self.ids.resultado.text = "Insira números válidos."
+                    self.ids.resultado.pos_hint: {"center_x":.5, "center_y":.38}
                     self.ids.imc_condition.text = ""
                 else:
                     imc = round(peso / (altura ** 2), 2)
@@ -450,7 +467,9 @@ class CalculadoraScreen(Screen):
                     self.ids.dicas.text = f'Dicas:\n{dicas}'
 
             except ValueError:
-                self.ids.resultado.text = "Insira valores numéricos válidos para altura e peso."
+                self.ids.resultado.text = "Insira valores numéricos válidos para \n altura e peso."
+                self.ids.resultado.font_size = "15sp"
+                self.ids.resultado.pos_hint: {"center_x":.5, "center_y":.38}
                 self.ids.imc_condition.text = ""
 
     def on_saiba_mais_press(self):
@@ -527,7 +546,7 @@ class TesteApp(MDApp):
         self.root.current = "login"
 
 class MyFirebaseLogin:
-    def Login(self, email, password):
+    def Login(self, email, password, login_message):
         try:
             auth.sign_in_with_email_and_password(email, password)
             print("Login bem-sucedido")
@@ -543,7 +562,6 @@ class MyFirebaseLogin:
             print("Cadastro bem-sucedido")
         except:
             print("Cadastro falhou")
-
 
 
 
