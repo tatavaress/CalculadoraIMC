@@ -287,6 +287,18 @@ ScreenManager:
             source: "images/logoimcverde.png"
             size_hint:.25,.25
             pos_hint: {"center_x":.5, "center_y":.92}
+
+        MDTextButton:
+            text: "Voltar"
+            font_name: "Poppins-Regular.ttf"
+            theme_text_color: "Custom"
+            font_size: "15sp"
+            text_color: 162/255, 201/255, 86/255, 1
+            pos_hint: {"center_x":.1, "center_y":.92}
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "login" 
+                root.limpar_campos()
         MDLabel:
             text: "Insira seus dados"
             pos_hint: {"center_x":.5, "center_y":.82}
@@ -411,24 +423,17 @@ ScreenManager:
             markup: True
             halign: "right"  
             on_release: root.on_saiba_mais_press()
-
-        MDTextButton:
-            text: "Voltar"
-            font_name: "Poppins-Regular.ttf"
-            theme_text_color: "Custom"
-            font_size: "15sp"
-            text_color: 162/255, 201/255, 86/255, 1
-            valign: "top"
-            halign: "left"
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.current = "login"  
+ 
 
 '''
 
 class LoginScreen(Screen):
-    pass
 
+    def limpar_campos_login(self):
+        self.ids.email_login.text = ""
+        self.ids.senha_login.text = ""
+        self.ids.login_message.text = "Login"
+        self.ids.login_message.font_size = "40sp"
 
 class CadastroScreen(Screen):
     pass
@@ -437,9 +442,18 @@ class CadastroScreen(Screen):
 
 class CalculadoraScreen(Screen):
 
+    def limpar_campos(self):
+        self.ids.peso_kg.text = ""
+        self.ids.altura_m.text = ""
+        self.ids.resultado.text = ""
+        self.ids.imc_condition.text = ""
+        self.ids.dicas.text = ""
+
     def on_pre_enter(self, *args):
         if not auth.current_user:
             self.manager.current = "login"
+        else:
+            login_screen = self.manager.get_screen('login')
             
     def calculate(self, altura_m, peso_kg):
         altura_text = altura_m.text.strip()
