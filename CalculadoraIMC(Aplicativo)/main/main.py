@@ -564,11 +564,14 @@ class MyFirebaseLogin:
         try:
             auth.sign_in_with_email_and_password(email, password)
             print("Login bem-sucedido")
+            login_message.text = "Login realizado"
+            login_message.text_color = (162/255, 201/255, 86/255, 1)
+            login_message.font_size = "30sp"
         except:
             print("Login falhou")
             login_message.text = "Dados inválidos"
             login_message.text_color = (1, 0, 0, 1)  # Vermelho
-            login_message.font_size = "20sp"
+            login_message.font_size = "30sp"
 
     def sign_up(self, email, username, password):
         try:
