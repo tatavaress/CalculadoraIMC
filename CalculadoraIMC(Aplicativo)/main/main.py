@@ -268,7 +268,7 @@ ScreenManager:
                     radius: [23]
             on_release:
                 print("Cadastro realizado", email_signup.text, password_signup.text)
-                app.my_firebaselogin.sign_up(email_signup.text, username_signup.text, password_signup.text)
+                app.my_firebaselogin.sign_up(email_signup.text, username_signup.text, password_signup.text, signup_message)
                 root.manager.transition.direction = "right"
                 root.manager.current = "login"
 
@@ -573,14 +573,16 @@ class MyFirebaseLogin:
             login_message.text_color = (1, 0, 0, 1)  # Vermelho
             login_message.font_size = "30sp"
 
-    def sign_up(self, email, username, password):
+    def sign_up(self, email, username, password, login_message):
         try:
             auth.create_user_with_email_and_password(email, password)
             print("Cadastro bem-sucedido")
+            login_message.text = "Login"
+            login_message.text_color = (162/255, 201/255, 86/255, 1)
+            login_message.font_size = "40sp"
+
         except:
             print("Cadastro falhou")
-
-
 
 if __name__ == '__main__':
     TesteApp().run()
